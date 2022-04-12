@@ -1,0 +1,1 @@
+web: gunicorn djangoListOfBooks.wsgi
