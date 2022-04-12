@@ -23,5 +23,6 @@ router.register(r'books', rest_api.RestAPIView)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('books.urls'))
+    path('', include('books.urls')),
+    path('restApi/', include(router.urls))
 ]
