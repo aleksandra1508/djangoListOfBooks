@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div id="nav">
+        <h5>
+            <button id='nav_button'>
+                <a href="/">Book list</a>
+            </button>
+        </h5>
+    </div>
+
+    <h3>Do you want to delete this book?</h3>
+    <div id="list_of_books">
+            <table id='book_table'>
+                <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Date of publication</th>
+                    <th>ISBN</th>
+                    <th>Number of pages</th>
+                    <th>Language</th>
+                    <th>Cover</th>
+                </tr>
+                </thead>
+                <tbody>
+                        <tr>
+                            <td>{{book.title}}</td>
+                            <td>{{book.author }}</td>
+                            <td>{{book.date_of_publication}}</td>
+                            <td>{{book.isbn}}</td>
+                            <td>{{book.number_of_pages}}</td>
+                            <td>{{book.language}}</td>
+                            <td><img src="{{book.image_link}}" alt=""></td>
+                        </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+    <form action="{% url 'delete' book.id %}" method="POST">
+    {% csrf_token %}
+    <input type="submit" name="Confirm" value='DELETE' id='delete_button'>
+    </form>
+
+
+
+{% endblock %}

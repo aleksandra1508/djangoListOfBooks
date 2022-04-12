@@ -1,0 +1,50 @@
+{% load static %}
+{% load crispy_forms_tags %}
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <title>List of books</title>
+
+    <link rel="stylesheet" type="text/css" href="../static/style.css">
+</head>
+<body>
+
+    <div id="container">
+
+        <header>
+            <div id="title">
+                <h1>List of books</h1>
+            </div>
+        </header>
+
+        <div id="content">
+            {% if messages %}
+                {% for message in messages %}
+                   <div class="alert {{ message.tags }} m-2" id="msg" role="alert">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+            {% block content %}
+            {% endblock %}
+
+        </div>
+
+    </div>
+
+<script>
+    setTimeout(function(){
+      if ($('#msg').length > 0) {
+        $('#msg').remove();
+      }
+    }, 2000)
+  </script>
+
+</body>
+</html>

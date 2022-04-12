@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+     <div id="nav">
+        <h5>
+            <button id='nav_button'>
+                <a href="{% url 'list_of_books'%}">Book list</a>
+            </button>
+        </h5>
+    </div>
+    <main>
+        <h2>Fill to add a book</h2>
+        <div id="book_add_container">
+            <form method='POST' action=''>
+            {% csrf_token %}
+            {{form|crispy}}
+            <input type="submit" value='Save' id='submit_btn' name='add_book'>
+            </form>
+        </div>
+    </main>
+    {% if not request.resolver_match.kwargs %}
+        {% if import_books %}
+            <h2>List of books found</h2>
+            <div id="list_of_books" style="height: 500px; overflow-y: scroll;">
+                    <table id="table_of_books">
+                        <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Author</th>
+                            <th>Date of publication</th>
+                            <th>ISBN</th>
+                            <th>Number of pages</th>
+                            <th>Language</th>
+                            <th>Cover</th>
+                            <th>Import</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            {% for book in import_books %}
+                                    <tr>
+                                        <td>{{book.title}}</td>
+                                        <td>{{book.author }}</td>
+                                        <td>{{book.date_of_publication}}</td>
+                                        <td>{{book.isbn}}</td>
+                                        <td>{{book.number_of_pages}}</td>
+                                        <td>{{book.language}}</td>
+                                        <td><img src="{{book.image_link}}" alt=""></td>
+                                        <td>
+                                            <form action="{% url 'import_book' %}" method='POST'>
+                                                {% csrf_token %}
+                                                <input type="hidden" name='title' value='{{ book.title }}'>
+                                                <input type="hidden" name='author' value='{{ book.author }}'>
+                                                <input type="hidden" name='date_of_publication' value='{{ book.date_of_publication }}'>
+                                                <input type="hidden" name='isbn' value='{{ book.isbn }}'>
+                                                <input type="hidden" name='number_of_pages' value='{{ book.number_of_pages }}'>
+                                                <input type="hidden" name='language' value='{{ book.language }}'>
+                                                <input type="hidden" name='image_link' value='{{ book.image_link }}'>
+                                                <input type="submit" value='Import' id='edit_button'>
+                                            </form>
+                                        </td>
+                                    </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+             {% endif %}
+        <h2>Search for books in Google Books API</h2>
+        <div id="import_book">
+            <form action="">
+            {{raw_book_form|crispy}}
+            <input type="submit" value='Search' id="submit_button" name='search_book'>
+            </form>
+        </div>
+    {% endif %}
+{% endblock %}

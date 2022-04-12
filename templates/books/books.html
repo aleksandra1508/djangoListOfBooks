@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <h3>Search:</h3>
+    <div id="search">
+        <form method="get" class="uniForm">
+            {{book_filter.form|crispy}}
+		    <button id="search_button" type="submit">Search</button>
+		  </form>
+    </div>
+     <div id="nav">
+        <h5>
+            <button id='nav_button'>
+                <a href="{% url 'add'%}">Add Book</a>
+            </button>
+        </h5>
+    </div>
+    <main>
+        <div id="list_of_books" style="height: 500px; overflow-y: scroll;">
+            <table id='book_table'>
+                <thead>
+                {% if books %}
+                <tr>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Date of publication</th>
+                    <th>ISBN</th>
+                    <th>Number of pages</th>
+                    <th>Language</th>
+                    <th>Cover</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+                {% else %}
+                    <p>Empty list, add some book.</p>
+                {% endif %}
+                </thead>
+                <tbody>
+                    {% for book in books %}
+                        <tr>
+                            <td>{{book.title}}</td>
+                            <td>{{book.author }}</td>
+                            <td>{{book.date_of_publication}}</td>
+                            <td>{{book.isbn}}</td>
+                            <td>{{book.number_of_pages}}</td>
+                            <td>{{book.language}}</td>
+                            <td><img src="{{book.image_link}}" alt=""></td>
+                            <td><button id='edit_button'><a href="{% url 'edit' book.id %}">Edit</a></button></td>
+                            <td><button id='delete_button'><a href="{% url 'delete' book.id %}">Delete</a></button></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </main>
+{% endblock %}
