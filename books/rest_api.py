@@ -9,13 +9,13 @@ from .serializers import BookSerializer
 class RestAPIView(viewsets.mixins.ListModelMixin,
                   viewsets.GenericViewSet):
     queryset = Book.objects.all()
-    serializer = BookSerializer
+    serializer_class = BookSerializer
 
     filter_backends = [DjangoFilterBackend, SearchFilter]
-    filter_fields = {
+    filterset_fields = {
         'title': ['icontains'],
-        'authors': ['icontains'],
+        'author': ['icontains'],
         'language': ['icontains'],
-        'published_date': ['gte', 'lte']
+        'date_of_publication': ['gte', 'lte']
     }
-    search_fields = ['title', 'authors', 'language']
+    search_fields = ['title', 'author', 'language']

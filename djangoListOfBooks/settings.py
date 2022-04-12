@@ -35,6 +35,8 @@ ALLOWED_HOSTS = ['blooming-bastion-46712.herokuapp.com', '127.0.0.1']
 INSTALLED_APPS = [
     'books.apps.BooksConfig',
     'crispy_forms',
+    'rest_framework',
+    'django_filters',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -141,6 +143,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CRISPY_TEMPLATE_PACK = 'uni_form'
 
+# Django Rest Framework pagination
+
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 10
+}
 
 MESSAGE_TAGS = {
     messages.DEBUG: 'alert-info',
