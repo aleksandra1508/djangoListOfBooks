@@ -33,8 +33,8 @@ def json_to_list(books):
     if books:
         for book in books:
             volume = book['volumeInfo']
-            import_book = Book(title=volume['title'], author=volume['authors'],
-                               date_of_publication=volume['publishedDate'],
+            import_book = Book(title=volume['title'], author=(lambda x: volume[x] if(x in volume) else "")('authors'),
+                               date_of_publication=(lambda x: volume[x] if(x in volume) else "")('publishedDate'),
                                isbn=volume['industryIdentifiers'][0]['identifier'],
                                number_of_pages=(lambda x: volume[x] if(x in volume) else 0)('pageCount'),
                                image_link=(lambda x: volume['imageLinks'][x]
